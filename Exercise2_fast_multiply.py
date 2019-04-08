@@ -7,7 +7,6 @@
 
 def fast_multiply(p, N, P):
     power_bin = format(N, "b")
-    print(power_bin)
     a = []
     b = []
     A = int(P[0])
