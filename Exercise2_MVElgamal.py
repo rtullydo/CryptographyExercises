@@ -34,17 +34,22 @@ def fast_inverse(a, m):
 # efficiently compute nP
 
 
-def fast_multiply(p, N, P):
+def fast_multiply(p, N, P, A_val):
     power_bin = format(N, "b")
+    binary = power_bin[::-1]
+    print(binary)
     a = []
     b = []
     A = int(P[0])
     B = int(P[1])
-    for _ in range(0, len(power_bin)):
-        A *= 2
-        B *= 2
-        a.append(A)
-        b.append(B)
+    for i in range(0, len(binary)):
+       a.append(elliptic_add(p, P, P, A_val)[0])
+       b.append(elliptic_add(p, P, P, A_val)[1])
+       # A *= 2
+       # B *= 2
+       # a.append(A)
+       # b.append(B)
+    print(A)
     nP = [sum([i * N for i in a]) % p, sum([i * N for i in b]) % p]
     return nP
 

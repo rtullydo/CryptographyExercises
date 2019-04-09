@@ -35,23 +35,30 @@ def fast_inverse(a, m):
 
 def elliptic_add(p, P, Q, A):
     r = []
-    if P != Q and Q != [fast_inverse(int(P[0]), p), fast_inverse(int(P[1]), p)]:
-        line = (int(Q[1]) - int(P[1])) / (int(Q[0]) - int(P[0]))
-        x = (line**2 - int(P[0]) - int(P[1])) % p
-        y = (line * (int(P[0]) - x) - int(P[1])) % p
-        r.append(int(x))
-        r.append(int(y))
-    if Q == P:
-        line = ((3 * int(P[0])**2) + A) / 2 * int(P[1])
-        x = (line**2 - int(P[0]) - int(Q[0])) % p
-        y = (line * (int(P[0]) - x) - int(P[1])) % p
+    if int(P[0]) == 0 and int(P[1]) == 0 and int(Q[0]) == 0 and int(Q[1]) == 0:
+        r = [0, 0]
+    elif Q == P:
+        line = ((3 * (int(P[0])**2)) + A) / (2 * int(P[1]))
+        line = int(fast_inverse(1/line, p))
+        print(line)
+        x = int((line**2) - int(P[0]) - int(Q[0])) % p
+        y = int(line * (int(P[0]) - x) - int(P[1])) % p
         r.append(x)
         r.append(y)
-    if Q == [fast_inverse(int(P[0]), p), fast_inverse(int(P[1]), p)]:
+    elif int(Q[0]) == int(P[0]) and int(P[1]) == -int(Q[1]):
         r.append(0)
         r.append(0)
-    if Q == 0:
+    elif int(Q[0]) == 0 and int(Q[1]) == 0:
         r = P
+    elif int(P[0]) == 0 and int(P[1]) == 0:
+        r = Q
+    else:
+        line = (int(Q[1]) - int(P[1])) / (int(Q[0]) - int(P[0]))
+        line = int(fast_inverse(1 / line, p))
+        x = ((line ** 2) - int(P[0]) - int(Q[0]))
+        y = (line * (int(P[0]) - x) - int(P[1]))
+        r.append(int(x) % p)
+        r.append(int(y) % p)
     return r
 
 
