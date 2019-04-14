@@ -73,8 +73,11 @@ def fast_multiply(p, N, P, A_val):
     A = int(P[0])
     B = int(P[1])
     for i in range(0, len(binary)):
-       a.append(elliptic_add(p, P, P, A_val)[0])
-       b.append(elliptic_add(p, P, P, A_val)[1])
+        print(P)
+        a.append(int(P[0]))
+        b.append(int(P[1]))
+        P = [elliptic_add(p, P, P, A_val)[0], elliptic_add(p, P, P, A_val)[1]]
+
        # A *= 2
        # B *= 2
        # a.append(A)

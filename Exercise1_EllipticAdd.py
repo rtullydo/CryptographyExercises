@@ -38,9 +38,7 @@ def elliptic_add(p, P, Q, A):
     if int(P[0]) == 0 and int(P[1]) == 0 and int(Q[0]) == 0 and int(Q[1]) == 0:
         r = [0, 0]
     elif Q == P:
-        line = ((3 * (int(P[0])**2)) + A) / (2 * int(P[1]))
-        line = int(fast_inverse(1/line, p))
-        print(line)
+        line = ((3 * (int(P[0])**2)) + A) * fast_inverse(2 * int(P[1]), p) % p
         x = int((line**2) - int(P[0]) - int(Q[0])) % p
         y = int(line * (int(P[0]) - x) - int(P[1])) % p
         r.append(x)
@@ -53,8 +51,8 @@ def elliptic_add(p, P, Q, A):
     elif int(P[0]) == 0 and int(P[1]) == 0:
         r = Q
     else:
-        line = (int(Q[1]) - int(P[1])) / (int(Q[0]) - int(P[0]))
-        line = int(fast_inverse(1 / line, p))
+        line = (int(Q[1]) - int(P[1])) * fast_inverse(int(Q[0]) - int(P[0]), p) % p  # / (int(Q[0]) - int(P[0]))
+        # line = int(fast_inverse(1 / line, p))
         x = ((line ** 2) - int(P[0]) - int(Q[0]))
         y = (line * (int(P[0]) - x) - int(P[1]))
         r.append(int(x) % p)
