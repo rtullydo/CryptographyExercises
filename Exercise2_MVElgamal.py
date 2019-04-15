@@ -30,6 +30,10 @@ def fast_inverse(a, m):
     return fast_powering(a, p, m)
 
 
+# Function Three:  This is a function that finds the addition of the two points on the elliptic curve. It uses the fast
+# inverse function to help compute the answer.
+
+
 def elliptic_add(p, P, Q, A):
     r = []
     if int(P[0]) == 0 and int(P[1]) == 0 and int(Q[0]) == 0 and int(Q[1]) == 0:
@@ -57,7 +61,7 @@ def elliptic_add(p, P, Q, A):
     return r
 
 
-# Function Three: This is the double and add algorithm which uses the binary expansion of N and the point P to
+# Function Four: This is the double and add algorithm which uses the binary expansion of N and the point P to
 # efficiently compute nP
 
 
@@ -79,7 +83,7 @@ def fast_multiply(p, N, P, a_val):
     return nP
 
 
-# Function Fours: Encrypts the inputted message. R, C1 and C2 are computed and returned.
+# Function Five: Encrypts the inputted message. R, C1 and C2 are computed and returned.
 
 
 def encrypt(p, P, M, A, a):
@@ -95,7 +99,7 @@ def encrypt(p, P, M, A, a):
     return cipher_m
 
 
-# Function Five: Decrypts the inputted message. R, C1 and C2 are used to compute the decrypted message
+# Function Six: Decrypts the inputted message. R, C1 and C2 are used to compute the decrypted message
 
 
 def decrypt(p, M, N, a):
@@ -109,7 +113,7 @@ def decrypt(p, M, N, a):
     return inverse_M1, inverse_M2
 
 
-# Function Six: Determines if the user would like to encrypt or decrypt a message. This is where inputs are taken
+# Function Seven: Determines if the user would like to encrypt or decrypt a message. This is where inputs are taken
 # from the user. Depending on the users inputs another function is called and its results are printed.
 
 
