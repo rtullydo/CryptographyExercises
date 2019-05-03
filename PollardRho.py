@@ -1,7 +1,6 @@
 def extended_euclidean_algorithm(a, b):
-    if b > a:
-        temp = a  
-        b = temp
+    #removed the sorter you had at the top, which was missing the reassignment of a
+    #and also screwed up the order of the returns
     u = 1
     g = a
     x = 0
@@ -23,16 +22,18 @@ def extended_euclidean_algorithm(a, b):
 
 
 def pollard_rho(ax, ay, bx, by, p, g, h):
-    u = ax - ay
-    v = by - bx
+    u = (ax - ay) % (p-1) 
+    v = (by - bx) % (p-1)
     print(v)
     d, s, b = extended_euclidean_algorithm(v, p-1)
-    w = s * u
+    w = (s * u) % (p-1)
     print(d, s, b)
-    for i in range(1, d-1):
+    for i in range(0, d-1):
         t = (w/d) + i * ((p-1)/d)
-        if g**t == (h % p):
-            print(t)
+        #if g**t == (h % p): #this will overflow (you could use fastpower)
+        if pow(g, t, p) == h:
+            print('the correct value of t is %i' %t)
+            break
 
 
 def collision(g, h, p):
@@ -41,11 +42,12 @@ def collision(g, h, p):
     ay = 0
     by = 0
     x = 1
-    y = 0
-    while x != y:
+    y = 1 #better ti keep these separate
+    while True:
         x, ax, bx = func(x, g, h, p, ax, bx)
-        y, ay, by = func(x, g, h, p, ay, by)
-        if x % y == 0 or y % x == 0:
+        y, ay, by = func(y, g, h, p, ay, by)
+        y, ay, by = func(y, g, h, p, ay, by) #added a second application of mixing function
+        if x == y:
             break
     print("The collision is: ", x, "and", y)
     print(ax, bx, ay, by)
@@ -55,14 +57,14 @@ def collision(g, h, p):
 def func(s, g, h, p, a, b):
     if 1 <= s <= p/3:
         s = (g * s) % p
-        a += 1 % (p-1)
+        a = a + 1 % (p-1) #i don't think the iterative commands respect order of operations with regard to mod
     elif p/3 <= s < 2*p/3:
         s = (s**2) % p
-        a *= 2 % (p-1)
-        b *= 2 % (p-1)
+        a = a*2 % (p-1)
+        b = b*2 % (p-1)
     elif 2*p/3 <= s < p:
         s = (s * h) % p
-        b += 1 % (p-1)
+        b = b + 1 % (p-1)
     return s, a, b
 
 
@@ -74,4 +76,5 @@ def run():
 
 
 run()
+
 
